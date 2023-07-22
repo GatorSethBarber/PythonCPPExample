@@ -55,3 +55,4 @@ mingw32-make clean
 
 ## For ctypes:
 * https://www.youtube.com/watch?v=b1E-4EZJ9OU for code
+* The documentation for ctypes (module) included with Python 3.9.5
