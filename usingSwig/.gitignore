@@ -1,0 +1,4 @@
+/__pycache__
+*.pyd
+example.py
+example_wrap.cxx
