@@ -2,7 +2,9 @@
 
 The code in these modules illustrate how to build C++ so that it can be called with functions using two methods: `ctypes` and swig. Both make use of g++ and mingw32-make and currently require that the PATH is properly configured using mingw or whatever folders contain the tools and files necessary for C++.
 
-Note on python version: Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs. This causes the code to naturally break for newer versions, as apparently some or all of the C++ standard library is included as a .dll. A hack that fixes this is adding these back in to the search path. Hopefully, a more elegant solution will be created in the future.
+Note on python version: Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs. This causes the code to naturally break for newer versions, as the C++ standard library DLL is not included. Thus, it needs to be added in. Following advice in https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa, have added the bin folder for mingw to the include path, which includes the DLL libstdc++-6.dll on my machine.
+
+Note: Two other DLLs are also built into the DLLs created by the Makefiles. However, these are apparently already included by default.
 
 Additionally, note that the above functionality was taken out for security reasons.
 
@@ -88,4 +90,6 @@ mingw32-make clean
     * https://www.reddit.com/r/learnpython/comments/ntb5f7/ctypes_library_isnt_working_with_c_code/
     * https://stackoverflow.com/questions/74524163/wrapping-an-external-c-library-with-swig-not-finding-standard-libraries
     * https://stackoverflow.com/questions/68298520/python-filenotfounderror-using-module-ctypes-and-cdll
-    * See also source above
+    * See also source above (https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa)
+* For how to view the DLL dependencies
+    * https://stackoverflow.com/questions/7378959/how-to-check-for-dll-dependency

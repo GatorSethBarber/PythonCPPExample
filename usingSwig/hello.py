@@ -5,21 +5,16 @@
 #  https://www.reddit.com/r/learnpython/comments/ntb5f7/ctypes_library_isnt_working_with_c_code/
 #  https://stackoverflow.com/questions/74524163/wrapping-an-external-c-library-with-swig-not-finding-standard-libraries
 #  https://stackoverflow.com/questions/68298520/python-filenotfounderror-using-module-ctypes-and-cdll
+# For how to view the DLL dependencies
+#  https://stackoverflow.com/questions/7378959/how-to-check-for-dll-dependency
 
-# Python 3.8 stopped searching path and current working directory (see 2nd source), so add them back in
-# until can think of a better solution
+# Python 3.8 stopped searching path and current working directory; Need to add C++ standard lib
+# See also https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa
 import sys
 
 if sys.version_info.major > 2 and sys.version_info.minor >= 8:
     import os
-    temp = os.getenv('path').split(os.pathsep)
-    for path in temp:
-        try:
-            os.add_dll_directory(path)
-        except:
-            pass
-
-    os.add_dll_directory(os.getcwd())
+    os.add_dll_directory("C:\\mingw\\mingw64\\bin")
 
 
 import example
