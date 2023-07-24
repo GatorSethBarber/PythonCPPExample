@@ -38,7 +38,20 @@ To remove all created files (including those needed for the test program hello.p
 mingw32-make clean
 ```
 
+### Advantages
+* Allows conversion of C/C++ to many languages with only minor alterations to the build process (mainly changing one flag and potentially the output file type)
+* Once set up, is relatively easy to use
+* Implements most of function overloading
+* Is (apparently) fully set up for C
+
+### Disadvantages
+* Can be difficult to set up
+* Documentation is not plentiful
+* While full coverage of the standard C++ library is underway, it is apparently not complete
+* In function overloading, does not distinguish between datatypes of the same general group. For example, does not distinguish between int and long (will just discard one of them)
+
 # Sources
+* For a discussion about swig vs ctypes, see https://stackoverflow.com/questions/135834/python-swig-vs-ctypes
 
 ## For swig
 * Various documentation/tutorials provided in the download for swig and on https://www.swig.org, the official site.
@@ -52,6 +65,10 @@ mingw32-make clean
     * Another StackOverflow source mentioned why to use .pyd instead of .dll; could not find source again.
     * https://stackoverflow.com/questions/50278029/how-to-import-a-pyd-file-as-a-python-module
 * *Programming Python* by Mark Lutz contains a section on SWIG.
+* For how to incldue (parts of the) C++ standard library:
+    * https://www.swig.org/Doc2.0/Library.html#Library_stl_cpp_library
+* For how overloading is handled:
+    * https://www.swig.org/Doc4.1/SWIGPlus.html#SWIGPlus_nn25
 
 ## For ctypes:
 * https://www.youtube.com/watch?v=b1E-4EZJ9OU for code

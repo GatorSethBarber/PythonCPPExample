@@ -9,6 +9,8 @@
 # About using pyd file type
 #  Another StackOverflow source mentioned why to use .pyd instead of .dll; could not find source again.
 #  https://stackoverflow.com/questions/50278029/how-to-import-a-pyd-file-as-a-python-module
+# For certain C++ standard library:
+#  https://www.swig.org/Doc2.0/Library.html#Library_stl_cpp_library
 python_loc = C:\Users\coder\AppData\Local\Programs\Python\Python36
 python_lib = python36
 python_version = 3.6
