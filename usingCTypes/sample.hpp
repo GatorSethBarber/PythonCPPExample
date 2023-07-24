@@ -6,5 +6,5 @@ using namespace std;
 
 extern "C" {
     bool divizByTwo(int integer);
-    void printInput(string input);
+    void printInput(char* input);
 }

@@ -30,4 +30,4 @@ pprint.pprint(dir(sample))
 
 print("sample.divizByTwo(4) <-", sample.divizByTwo(4))
 print('Calling printInput(ctypes.create_string_buffer(b"hello"))')
-sample.printInput(ctypes.create_string_buffer(b"hello"))
+sample.printInput(ctypes.create_string_buffer(b"hello\0"))
