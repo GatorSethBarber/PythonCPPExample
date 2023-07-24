@@ -1,6 +1,10 @@
 # C++ and Python Examples
 
-The code in these modules illustrate how to build C++ so that it can be called with functions using two methods: `ctypes` and swig. Both make use of g++ and mingw32-make.
+The code in these modules illustrate how to build C++ so that it can be called with functions using two methods: `ctypes` and swig. Both make use of g++ and mingw32-make and currently require that the PATH is properly configured using mingw or whatever folders contain the tools and files necessary for C++.
+
+Note on python version: Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs. This causes the code to naturally break for newer versions, as apparently some or all of the C++ standard library is included as a .dll. A hack that fixes this is adding these back in to the search path. Hopefully, a more elegant solution will be created in the future.
+
+Additionally, note that the above functionality was taken out for security reasons.
 
 ## `ctypes`
 
@@ -9,6 +13,8 @@ This utilizes the standard Python module `ctypes`. To build and illustrate the p
 ```
 mingw32-make
 ```
+
+Currently, some of the functionality of the included C++ code is broken.
 
 ### Advantages
 
@@ -65,7 +71,7 @@ mingw32-make clean
     * Another StackOverflow source mentioned why to use .pyd instead of .dll; could not find source again.
     * https://stackoverflow.com/questions/50278029/how-to-import-a-pyd-file-as-a-python-module
 * *Programming Python* by Mark Lutz contains a section on SWIG.
-* For how to incldue (parts of the) C++ standard library:
+* For how to include (parts of the) C++ standard library:
     * https://www.swig.org/Doc2.0/Library.html#Library_stl_cpp_library
 * For how overloading is handled:
     * https://www.swig.org/Doc4.1/SWIGPlus.html#SWIGPlus_nn25
@@ -73,3 +79,13 @@ mingw32-make clean
 ## For ctypes:
 * https://www.youtube.com/watch?v=b1E-4EZJ9OU for code
 * The documentation for ctypes (module) included with Python 3.9.5
+
+## For hack to get it working on newer versions of python
+* For making it work in python 3.9, got info/functions from:
+    * https://www.reddit.com/r/learnpython/comments/wmd9ry/python_unable_to_load_dll_filenotfounderror_but/
+    * https://stackoverflow.com/questions/59014318/filenotfounderror-could-not-find-module-libvlc-dll/59016932#59016932 (most helpful)
+    * https://github.com/python/cpython/issues/93094
+    * https://www.reddit.com/r/learnpython/comments/ntb5f7/ctypes_library_isnt_working_with_c_code/
+    * https://stackoverflow.com/questions/74524163/wrapping-an-external-c-library-with-swig-not-finding-standard-libraries
+    * https://stackoverflow.com/questions/68298520/python-filenotfounderror-using-module-ctypes-and-cdll
+    * See also source above
