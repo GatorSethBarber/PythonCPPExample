@@ -4,7 +4,7 @@ The code in these modules illustrate how to build C++ so that it can be called w
 
 Note on python version: Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs. This causes the code to naturally break for newer versions, as the C++ standard library DLL is not included. Thus, it needs to be added in. Following advice in https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa, have added the bin folder for mingw to the include path, which includes the DLL libstdc++-6.dll on my machine.
 
-Note: Two other DLLs are also built into the DLLs created by the Makefiles. However, these are apparently already included by default.
+Note: Two other DLLs are also built into the DLLs created by the Makefiles. However, these are standard Windows dlls.
 
 Additionally, note that the above functionality was taken out for security reasons.
 
@@ -58,8 +58,34 @@ mingw32-make clean
 * While full coverage of the standard C++ library is underway, it is apparently not complete
 * In function overloading, does not distinguish between datatypes of the same general group. For example, does not distinguish between int and long (will just discard one of them)
 
+# pybind11
+
+This is a newer tool than the others. Similar to swig, it is a third party tool. However, unlike Swig, it is focused purely on C/C++ to Python. Using pybind11 is similar to using emscripten. In a .cpp file, bindings are specified that will be used to allow python to access (public) functionaligy of a C++ class or function. (In this code, these are placed into a separate file.) Before pybinds11 can be used, it must be installed. The way it was installed for this was the method by adding a git submodule as described in https://pybind11.readthedocs.io/en/stable/installing.html. More specifically, in a git project, run the following two commands:
+```
+git submodule add -b stable ../../pybind/pybind11 extern/pybind11
+git submodule update --init
+```
+Afterwards, the pybinds11 module can be accessed like any 3rd-party C++ module.
+
+### Building
+Currently, the code is built using directly using a g++ command in a makefile. Doing so requires that the name of the file be the same as the given name of the pybind module and that the file extension match one specified by Python. Thus, while it is doable, it would be more preferable to use CMake instead.
+
+To build, run
+```
+mingw32-make
+```
+
+### Advantages
+* Once set up, relatively easy to use
+* Good control over what is integrated into Python and how it is integrated
+* Good for working with numpy in C++ (see video tutorial)
+
+### Disadvantages
+* Best done using CMake
+
 # Sources
 * For a discussion about swig vs ctypes, see https://stackoverflow.com/questions/135834/python-swig-vs-ctypes
+* For a video going over various ways of integrating Python and C++, see https://www.youtube.com/watch?v=vvyTuFOJRrk
 
 ## For swig
 * Various documentation/tutorials provided in the download for swig and on https://www.swig.org, the official site.
@@ -81,6 +107,12 @@ mingw32-make clean
 ## For ctypes:
 * https://www.youtube.com/watch?v=b1E-4EZJ9OU for code
 * The documentation for ctypes (module) included with Python 3.9.5
+
+## For pybind11
+* For compilation statement: https://stackoverflow.com/questions/60699002/how-can-i-build-manually-c-extension-with-mingw-w64-python-and-pybind11
+* Official compilation resource: https://pybind11.readthedocs.io/en/stable/compiling.html
+* For tutorial: https://www.youtube.com/watch?v=_5T70cAXDJ0
+* Official documentation to get pybind11: https://pybind11.readthedocs.io/en/stable/installing.html
 
 ## For hack to get it working on newer versions of python
 * For making it work in python 3.9, got info/functions from:

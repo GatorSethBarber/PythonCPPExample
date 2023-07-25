@@ -11,9 +11,9 @@
 #  https://stackoverflow.com/questions/50278029/how-to-import-a-pyd-file-as-a-python-module
 # For certain C++ standard library:
 #  https://www.swig.org/Doc2.0/Library.html#Library_stl_cpp_library
-python_loc = C:\Users\coder\AppData\Local\Programs\Python\Python39
-python_lib = python39
-python_version = 3.9
+python_loc = C:\Users\coder\AppData\Local\Programs\Python\Python311
+python_lib = python311
+python_version = 3.11
 
 standard:
 	swig -c++ -python example.i
