@@ -83,7 +83,7 @@ mingw32-make -f Makefile.original
 To build with CMake on Windows, both CMake and MSBuild are required. They come with the C++ tools installed with Windows; however, they are installed in the Developer Command Prompt.
 
 To run, perform the following steps:
-1. In the Developer Command Prompt, navigate to usingPyBind11/build
+1. In the Developer Command Prompt, navigate to usingPyBind11/build. If the build folder has not been created, create it.
 2. Inside of the build directory, run, in order
 ```
 cmake ../..
