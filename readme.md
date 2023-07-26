@@ -8,6 +8,8 @@ Note: Two other DLLs are also built into the DLLs created by the Makefiles. Howe
 
 Additionally, note that the above functionality was taken out for security reasons.
 
+Note: The CMakeLists.txt fild in the main folder is for pybinds11. It was placed there so it could access the extern folder. For information on running, see the appropriate section below. It was mainly copied from https://www.youtube.com/watch?v=_5T70cAXDJ0.
+
 ## `ctypes`
 
 This utilizes the standard Python module `ctypes`. To build and illustrate the program, navigate to the ctypes folder and run 
@@ -75,13 +77,30 @@ To build using the original makefile, run
 mingw32-make -f Makefile.original
 ```
 
+
+#### Building With CMake on Windows
+
+To build with CMake on Windows, both CMake and MSBuild are required. They come with the C++ tools installed with Windows; however, they are installed in the Developer Command Prompt.
+
+To run, perform the following steps:
+1. In the Developer Command Prompt, navigate to usingPyBind11/build
+2. Inside of the build directory, run, in order
+```
+cmake ../..
+MSBuild example.sln
+```
+3. Copy the .pyd file from the Debug folder to usingPyBind11, such as by running
+```
+cd Debug
+cp *.pyd ../../
+```
 ### Advantages
 * Once set up, relatively easy to use
 * Good control over what is integrated into Python and how it is integrated
 * Good for working with numpy in C++ (see video tutorial)
 
 ### Disadvantages
-* Best done using CMake
+* Best done using CMake, and CMake behaves differently in Windows than in Unix.
 
 # Sources
 * For a discussion about swig vs ctypes, see https://stackoverflow.com/questions/135834/python-swig-vs-ctypes
