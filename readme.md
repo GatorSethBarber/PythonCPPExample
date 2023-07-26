@@ -70,9 +70,9 @@ Afterwards, the pybinds11 module can be accessed like any 3rd-party C++ module.
 ### Building
 Currently, the code is built using directly using a g++ command in a makefile. Doing so requires that the name of the file be the same as the given name of the pybind module and that the file extension match one specified by Python. Thus, while it is doable, it would be more preferable to use CMake instead.
 
-To build, run
+To build using the original makefile, run
 ```
-mingw32-make
+mingw32-make -f Makefile.original
 ```
 
 ### Advantages
@@ -125,3 +125,6 @@ mingw32-make
     * See also source above (https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa)
 * For how to view the DLL dependencies
     * https://stackoverflow.com/questions/7378959/how-to-check-for-dll-dependency
+
+* For having multiple Makefiles per directory, see
+    * https://stackoverflow.com/questions/12057852/multiple-makefiles-in-one-directory
