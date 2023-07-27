@@ -1,9 +1,14 @@
 import os
+import sys
 os.add_dll_directory("C:\\mingw\\mingw64\\bin")
 
 import example
 
 print(dir(example))
+
+if len(sys.argv) > 1:
+    quit()
+    
 
 example.say_hello("Seth")
 
@@ -16,3 +21,22 @@ obj.add_num(6)
 
 print("printing")
 obj.print_vec()
+
+import numpy as np
+
+print("\nGrad mult:")
+list_input = [1, 2, 3, 4, 5]
+print("input:", list_input)
+print("output:", obj.grad_product(list_input))
+print("\nGrad mult numpy")
+print("output:", obj.g_prod_numpy(np.array([[1, 2], [3, 4]])))
+
+print("\nCreate tuple")
+print("Output:", example.create_tuple("hello", 3.14))
+
+print("\nMake Triplet")
+print("Output:", example.make_triplet(0, "hello to yu"))
+
+print("\nTesting property")
+print(obj.my_var)
+obj.my_var = 3

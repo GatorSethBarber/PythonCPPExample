@@ -11,4 +11,4 @@ standard:
 	echo "If error, use the following as the suffix"
 	py -$(python_version) -c "from distutils import sysconfig; print(sysconfig.get_config_var('EXT_SUFFIX'))
 	g++ -shared -o example.cp311-win_amd64.pyd example.cpp pybinds.cpp -I../extern/pybind11/include/ -I$(python_loc)\include -L$(python_loc)\libs -l$(python_lib)
-	py -$(python_version) test.py
+	py -$(python_version) test.py test
