@@ -50,7 +50,7 @@ mingw32-make clean
 
 ### Building using CMake
 
-See the directions about building using CMake for pybind11 if using Windows
+See the directions about building using CMake for pybind11 if using Windows.
 If using Linux, just delete the current CMakeLists.txt and rename LinuxCMakeLists.txt. Then run the following commands (after creating a build directory):
 ```
 cmake -S . -B build
