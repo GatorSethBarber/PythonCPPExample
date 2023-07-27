@@ -48,6 +48,16 @@ To remove all created files (including those needed for the test program hello.p
 mingw32-make clean
 ```
 
+### Building using CMake
+
+See the directions about building using CMake for pybind11 if using Windows
+If using Linux, just delete the current CMakeLists.txt and rename LinuxCMakeLists.txt. Then run the following commands (after creating a build directory):
+```
+cmake -S . -B build
+cd build
+make
+```
+
 ### Advantages
 * Allows conversion of C/C++ to many languages with only minor alterations to the build process (mainly changing one flag and potentially the output file type)
 * Once set up, is relatively easy to use
@@ -142,3 +152,15 @@ To run, perform the following steps:
 
 * For having multiple Makefiles per directory, see
     * https://stackoverflow.com/questions/12057852/multiple-makefiles-in-one-directory
+
+## Sources solely for CMake
+* Official CMake Documentation
+* See https://stackoverflow.com/questions/31038963/how-do-you-rename-a-library-filename-in-cmake for proper way to change name.
+* https://stackoverflow.com/questions/65626613/assigning-output-name-based-on-c-header-file-and-cmake-command
+* For add_dependencies https://stackoverflow.com/questions/24614624/in-cmake-how-can-i-make-a-target-depend-on-another-target
+
+## Sources for batch file for Swig
+* For comments: https://www.tutorialspoint.com/batch_script/batch_script_comments.htm
+* For user input: https://www.geeksforgeeks.org/batch-script-input-output/
+* For conditional: https://stackoverflow.com/questions/5591491/conditional-statements-in-batch-files
+* For MSBuild release option: https://docs.revenera.com/installshield22helplib/helplibrary/MSBuild_CmdLine.htm

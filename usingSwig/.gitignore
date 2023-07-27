@@ -2,3 +2,4 @@
 *.pyd
 example.py
 example_wrap.cxx
+/build
