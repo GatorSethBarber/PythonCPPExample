@@ -164,3 +164,10 @@ To run, perform the following steps:
 * For user input: https://www.geeksforgeeks.org/batch-script-input-output/
 * For conditional: https://stackoverflow.com/questions/5591491/conditional-statements-in-batch-files
 * For MSBuild release option: https://docs.revenera.com/installshield22helplib/helplibrary/MSBuild_CmdLine.htm
+
+## For why need to use release build in Windows:
+* https://stackoverflow.com/questions/17028576/using-python-3-3-in-c-python33-d-lib-not-found
+
+### Related
+* https://stackoverflow.com/questions/42456284/how-to-link-shared-library-dll-with-cmake-in-windows
+* https://stackoverflow.com/questions/30129155/linking-a-library-that-not-have-a-standarized-name-extension
