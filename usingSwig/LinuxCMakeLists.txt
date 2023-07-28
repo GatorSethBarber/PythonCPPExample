@@ -11,18 +11,18 @@ cmake_minimum_required(VERSION 3.22)
 project(testingSwig)
 
 add_custom_target(swigStuff
-        COMMAND swig -c++ -python ../firstSwig.i
+        COMMAND swig -c++ -python ../example.i
 )
 set_target_properties(swigStuff PROPERTIES PREFIX "")
 set_target_properties(swigStuff PROPERTIES SUFFIX "")
 set_target_properties(swigStuff PROPERTIES RUNTIME_OUTPUT_DIRECTORY ..)
 
-add_library(first SHARED firstSwig.cpp ${PROJECT_SOURCE_DIR}/firstSwig_wrap.cxx)
+add_library(example SHARED example.cpp ${PROJECT_SOURCE_DIR}/example_wrap.cxx)
 
-add_dependencies(first swigStuff)
+add_dependencies(example swigStuff)
 
-set_target_properties(first PROPERTIES PREFIX "_")
-set_target_properties(first PROPERTIES SUFFIX ".so")
-set_target_properties(first PROPERTIES LIBRARY_OUTPUT_DIRECTORY ..)
+set_target_properties(example PROPERTIES PREFIX "_")
+set_target_properties(example PROPERTIES SUFFIX ".so")
+set_target_properties(example PROPERTIES LIBRARY_OUTPUT_DIRECTORY ..)
 
-target_include_directories(first PUBLIC /usr/include/python3.10/)
+target_include_directories(example PUBLIC /usr/include/python3.10/)

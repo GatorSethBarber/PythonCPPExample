@@ -1,5 +1,7 @@
 /__pycache__
 *.pyd
+*.so
 example.py
 example_wrap.cxx
 /build
+/build-linux

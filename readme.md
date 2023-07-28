@@ -2,23 +2,25 @@
 
 The code in these modules illustrate how to build C++ so that it can be called with functions using two methods: `ctypes` and swig. Both make use of g++ and mingw32-make and currently require that the PATH is properly configured using mingw or whatever folders contain the tools and files necessary for C++.
 
-Note on python version: Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs. This causes the code to naturally break for newer versions, as the C++ standard library DLL is not included. Thus, it needs to be added in. Following advice in https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa, have added the bin folder for mingw to the include path, which includes the DLL libstdc++-6.dll on my machine.
+Note on operating system: Tested on Windows and Ubuntu
 
-Note: Two other DLLs are also built into the DLLs created by the Makefiles. However, these are standard Windows dlls.
+## Setting up for local python version
 
-Additionally, note that the above functionality was taken out for security reasons.
+Python version 3.8, (according to 2nd source in hack), removed the current working directory and the path from the search for DLLs for security reasons. This causes the code to naturally break for newer versions of python on Windows, as the C++ standard library DLL is not included. Thus, if using Windows, it needs to be added in. Following advice in https://stackoverflow.com/questions/69885600/swig-doesnt-work-on-windows-with-mingw-w64-when-binding-c-and-python-dll-loa, I have added the bin folder for mingw to the include path where necessary, which includes the DLL libstdc++-6.dll on my machine. Two other DLLs are also built into the DLLs created by the Makefiles. However, these are standard Windows dlls.
 
+The actual versions of Python used were 3.11 for Windows and 3.10 for Ubuntu Linux (apparently, the current default). To change these, replace the appropriate directory and specifications in the make and cmake files that need to be ran. This editing usually boils down to just changing the numbers to agree with the version. For example, if running (64-bit) Python 3.9 on Windows, just change occurrences of python311 to python39 and 3.11 to 3.9.
+
+## Note on outermost CMakeLists.txt
 Note: The CMakeLists.txt fild in the main folder is for pybinds11. It was placed there so it could access the extern folder. For information on running, see the appropriate section below. It was mainly copied from https://www.youtube.com/watch?v=_5T70cAXDJ0.
 
 ## `ctypes`
 
-This utilizes the standard Python module `ctypes`. To build and illustrate the program, navigate to the ctypes folder and run 
+This utilizes the standard Python module `ctypes`. To build and illustrate the program, navigate to the ctypes folder and run:
 
 ```
-mingw32-make
+mingw32-make                 // on Windows
+make -f Makefile-linux.mk    // on Linux
 ```
-
-Currently, some of the functionality of the included C++ code is broken.
 
 ### Advantages
 
@@ -34,28 +36,49 @@ Currently, some of the functionality of the included C++ code is broken.
 
 This is a 3rd party program that allows C/C++ to be built to a large number of languages, including Python. Before running the Makefile, perform the following steps:
 
-1. Install Python 3.6 (more work needs to be done before later versions can be used) and make sure `py` runs from the comamnd line
-2. In the Makefile, set the value of `python_loc` to be the location where that version of Python is installed.
-3. Install swig (used verison 4.0.2) and add it to PATH.
+* For Windows:
+    1. Install swig (used version 4.0.1) from https://www.swig.org/download.html, unzip the download, add it the appropriate folder to the path
+    2. In the Makefile, set the value of `python_loc` to be the location where that version of Python is installed if using `mingw32-make`
+    3. Appropritately modify CMakeLists.txt if using cmake
+* For Linux:
+    Attempt to install swig via the following commands, perhaps tailored to the appropriate Linux distribution:
+    ```
+    sudo apt-get update
+    sudo apt-get install swig
+    ```
+    If not available through the package manager, download from https://www.swig.org/download.html and make it so swig is accessible from the command line.
 
+### Building using a Makefile
 To build and run a test program, run
 ```
-mingw32-make
+mingw32-make                   // on Windows
+make -f Makefile-linux.mk      // on Linux
 ```
 
 To remove all created files (including those needed for the test program hello.py), run
 ```
-mingw32-make clean
+mingw32-make clean                 // on Windows
+make -f Makefile-linux.mk clean    // on Linux
 ```
 
-### Building using CMake
+### Building using CMake and Testing
 
-See the directions about building using CMake for pybind11 if using Windows.
-If using Linux, just delete the current CMakeLists.txt and rename LinuxCMakeLists.txt. Then run the following commands (after creating a build directory):
+#### Windows
+
+See the notes under pybind11 for the requirements needed to build using cmake on Windows. Rahter than running cmake directly, it is reommended to run the batch file instead, the same as for pybind11.
+
+To test, run hello.py.
+
+
+#### Linux
+
+If using Linux, delete (or rename) the current CMakeLists.txt and rename LinuxCMakeLists.txt as CMakeLists.txt. Then run the following commands (after creating the build-linux directory).
 ```
-cmake -S . -B build
+cmake -S . -B build-linux
 cd build
 make
+cd ..
+python3 helloLinux.py
 ```
 
 ### Advantages
@@ -72,6 +95,8 @@ make
 
 # pybind11
 
+Note: The test python files assume that numpy has been installed for the python version bing used.
+
 This is a newer tool than the others. Similar to swig, it is a third party tool. However, unlike Swig, it is focused purely on C/C++ to Python. Using pybind11 is similar to using emscripten. In a .cpp file, bindings are specified that will be used to allow python to access (public) functionaligy of a C++ class or function. (In this code, these are placed into a separate file.) Before pybinds11 can be used, it must be installed. The way it was installed for this was the method by adding a git submodule as described in https://pybind11.readthedocs.io/en/stable/installing.html. More specifically, in a git project, run the following two commands:
 ```
 git submodule add -b stable ../../pybind/pybind11 extern/pybind11
@@ -79,14 +104,16 @@ git submodule update --init
 ```
 Afterwards, the pybinds11 module can be accessed like any 3rd-party C++ module.
 
-### Building
-Currently, the code is built using directly using a g++ command in a makefile. Doing so requires that the name of the file be the same as the given name of the pybind module and that the file extension match one specified by Python. Thus, while it is doable, it would be more preferable to use CMake instead.
+### Building with Makefile
+One way of building the code is by directly using a g++ command in a makefile. Doing so requires that the name of the file be the same as the given name of the pybind module and that the file extension match one specified by Python. Thus, while it is doable, it would be more preferable to use CMake instead.
 
 To build using the original makefile, run
 ```
-mingw32-make -f Makefile.original
+mingw32-make                // on Windows
+make -f Makefile-linux.mk   // on Linux
 ```
 
+Both of these will run a shortened version of the appropriate python file used for demonstration.
 
 #### Building With CMake on Windows
 
@@ -98,6 +125,20 @@ To run, perform the following steps:
 3. Run the `cmake_build.bat` file:
     1. In command prompt, do so by `cmake_build.bat`
     2. In PowerShell, do so by `./cmake_build.bat`
+
+### Building with CMake on Linux
+In the directory, run the following commands:
+```
+cmake -S .. -B buildLinux
+cd buildLinux
+make
+cd ..
+```
+
+To test, run
+```
+python3 testLinunx.py
+```
 
 ### Advantages
 * Once set up, relatively easy to use
@@ -171,3 +212,7 @@ To run, perform the following steps:
 ### Related
 * https://stackoverflow.com/questions/42456284/how-to-link-shared-library-dll-with-cmake-in-windows
 * https://stackoverflow.com/questions/30129155/linking-a-library-that-not-have-a-standarized-name-extension
+
+## Makefile related
+* For getting include path for python: Answer by Robᵩ in https://stackoverflow.com/questions/35071192/how-to-find-out-where-the-python-include-directory-is
+* For finding problems with makefile: https://stackoverflow.com/questions/16931770/makefile4-missing-separator-stop
