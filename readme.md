@@ -127,7 +127,7 @@ To run, perform the following steps:
     2. In PowerShell, do so by `./cmake_build.bat`
 
 ### Building with CMake on Linux
-In the directory, run the following commands:
+In the directory, run the following commands (after creating the buildLinux directory):
 ```
 cmake -S .. -B buildLinux
 cd buildLinux
