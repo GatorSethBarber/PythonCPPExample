@@ -102,7 +102,7 @@ This is a newer tool than the others. Similar to swig, it is a third party tool.
 git submodule add -b stable ../../pybind/pybind11 extern/pybind11
 git submodule update --init
 ```
-Afterwards, the pybinds11 module can be accessed like any 3rd-party C++ module.
+Afterwards, the pybind11 module can be accessed like any 3rd-party C++ module.
 
 ### Building with Makefile
 One way of building the code is by directly using a g++ command in a makefile. Doing so requires that the name of the file be the same as the given name of the pybind module and that the file extension match one specified by Python. Thus, while it is doable, it would be more preferable to use CMake instead.
